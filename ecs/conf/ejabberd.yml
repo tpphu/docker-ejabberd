@@ -151,7 +151,7 @@ listen:
     port: 5222
     ip: "::"
     module: ejabberd_c2s
-    starttls: true
+    starttls: false
     ##
     ## To enforce TLS encryption for client connections,
     ## use this instead of the "starttls" option:

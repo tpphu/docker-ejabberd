@@ -10,6 +10,7 @@ FIREWALL_WINDOW="4370-4379"
 INET_DIST_INTERFACE=""
 ERLANG_NODE=ejabberd@$(hostname -s)
 EJABBERD_BYPASS_WARNINGS=true
+EJABBERD_STARTTLS=false
 
 # define default environment variables
 ROOT_DIR="/home/ejabberd"
