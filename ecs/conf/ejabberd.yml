@@ -110,12 +110,12 @@ hosts:
 ## chains of certificates or certificate keys. Full chains will be built
 ## automatically by ejabberd.
 ##
-certfiles:
-  - "/home/ejabberd/conf/server.pem"
+## certfiles:
+  # - "/home/ejabberd/conf/server.pem"
 ##   - "/etc/letsencrypt/live/example.org/*.pem"
 ##   - "/etc/letsencrypt/live/example.com/*.pem"
 
-ca_file: "/home/ejabberd/conf/cacert.pem"
+## ca_file: "/home/ejabberd/conf/cacert.pem"
 
 ###.  =================
 ###'  TLS configuration
@@ -152,11 +152,15 @@ listen:
     ip: "::"
     module: ejabberd_c2s
     starttls: false
+    tls: false   
+    protocol_options:                                     
+      - "no_sslv2"                                                               
+      - "no_sslv3" 
     ##
     ## To enforce TLS encryption for client connections,
     ## use this instead of the "starttls" option:
     ##
-    ## starttls_required: true
+    starttls_required: false
     ##
     ## Stream compression
     ##
@@ -178,12 +182,16 @@ listen:
     request_handlers:
       "/ws": ejabberd_http_ws
       "/bosh": mod_bosh
+      "/http-bind": mod_http_bind
       "/oauth": ejabberd_oauth
       "/api": mod_http_api
     ##  "/pub/archive": mod_http_fileserver
     web_admin: true
+    http_bind: true
+    http_poll: true
     ## register: true
     captcha: false
+    
   ##
   ## ejabberd_service: Interact with external components (transports, ...)
   ##
@@ -257,7 +265,7 @@ listen:
 ## Allowed values are: false, optional or required
 ## You must specify 'certfiles' option
 ##
-s2s_use_starttls: optional
+s2s_use_starttls: false
 
 ##
 ## S2S whitelist or blacklist
@@ -697,7 +705,7 @@ acme:
    ##   - https://acme-v01.api.letsencrypt.org - (Default) for the production CA
    ##   - https://acme-staging.api.letsencrypt.org - for the staging CA
    ##   - http://localhost:4000 - for a local version of the CA
-   ca_url: "https://acme-v01.api.letsencrypt.org"
+   ca_url: "http://localhost:5280"
 
 ###.  =======
 ###'  MODULES
@@ -713,13 +721,14 @@ modules:
   mod_blocking: {} # requires mod_privacy
   mod_caps: {}
   mod_carboncopy: {}
-  mod_client_state: {}
+  ## mod_client_state: {}
   mod_configure: {} # requires mod_adhoc
   ## mod_delegation: {} # for xep0356
   mod_disco: {}
   ## mod_echo: {}
   ## mod_irc: {}
   mod_bosh: {}
+  mod_http_bind: {}
   ## mod_http_fileserver:
   ##   docroot: "/var/www"
   ##   accesslog: "/home/ejabberd/logs/access.log"
@@ -845,6 +854,10 @@ modules:
 ## uninstallation of public/private contributed modules
 ## (enabled by default)
 ##
+
+host_config:
+  "localhost":
+    auth_method: internal
 
 allow_contrib_modules: true
 
