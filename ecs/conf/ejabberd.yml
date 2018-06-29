@@ -824,7 +824,7 @@ modules:
   mod_vcard:
     search: false
   mod_vcard_xupdate: {}
-  mod_avatar: {}
+  # mod_avatar: {}
   mod_version: {}
   mod_stream_mgmt: {}
   ##   Non-SASL Authentication (XEP-0078) is now disabled by default
