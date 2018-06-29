@@ -69,6 +69,11 @@ COPY bin/* bin/
 COPY --chown=ejabberd:ejabberd conf conf/
 ADD --chown=ejabberd:ejabberd https://curl.haxx.se/ca/cacert.pem conf/cacert.pem
 
+# Custome Modules
+# WORKDIR $HOME
+# RUN mkdir -p .ejabberd-modules/sources
+# COPY --chown=ejabberd:ejabberd modules/ .ejabberd-modules/sources/
+
 # Setup runtime environment
 USER ejabberd
 VOLUME ["$HOME/database","$HOME/conf","$HOME/logs"]
